@@ -1,0 +1,25 @@
+.header-title {
+  margin-bottom: 25px;
+  font-size: 40px;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+.user-list .list-group-item {
+  cursor: pointer;
+}
+
+.text-muted {
+  font-size: 30px;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+.text-middle {
+  font-size: 20px;
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+}
+
+.map {
+  background: #dbdbdb;
+  height: 300px;
+  width: 100%;
+}
