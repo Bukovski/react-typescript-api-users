@@ -2,20 +2,28 @@ import React from "react";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
 
 
-const style = {
-  position: 'absolute',
-  left: 0,
-  top: 0,
+interface IYaMapProps {
+  geolocation: {
+    lng: number,
+    lat: number
+  }
+}
+
+interface IStyle {
+  [key: string]: string
+}
+
+
+const style: IStyle = {
   width: '100%',
   height: '100%'
 };
 
-const YaMap = ({ geolocation: { lng, lat } }) => {
+const YaMap = ({ geolocation: { lng, lat } }: IYaMapProps): JSX.Element => {
   return (
-    <YMaps
-    >
+    <YMaps>
       <Map
-        defaultMapTypes='yandex#satellite'
+        MapType={'yandex#hybrid'}
         defaultState={{ zoom: 3, center: [ lng, lat ] }}
         style={ style }>
         { <Placemark geometry={[ lng, lat ]} /> }
