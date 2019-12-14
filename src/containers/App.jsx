@@ -5,18 +5,25 @@ import UserInfo from "../components/user-info"
 
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     
-    this.state = {};
+    this.state = {
+      selectedUser: null
+    };
   
     this.apiService = new ApiUsers();
   }
   
+  handleUserSelected = (id) => () => {
+    this.setState({
+      selectedUser: id
+    });
+  };
   
   render() {
-    const { data } = this.state;
-  
+    const { selectedUser } = this.state;
+    
     return(
       <React.Fragment>
         <div className="header-title col-md-12 text-center">
@@ -24,9 +31,15 @@ class App extends Component {
         </div>
   
         <div className="row">
-          <UserList />
+          <UserList
+            getData={ this.apiService.getAllUsers }
+            onUserSelected={ this.handleUserSelected }
+          />
           
-          <UserInfo/>
+          <UserInfo
+            getData={ this.apiService.getUser }
+            userId={ selectedUser }
+          />
         </div>
       </React.Fragment>
     );

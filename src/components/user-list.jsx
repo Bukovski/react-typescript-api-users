@@ -2,86 +2,68 @@ import React, { Component } from 'react';
 
 
 class UserList extends Component {
-  constructor() {
-    super();
-    this.state = {
+  constructor(props) {
+    super(props);
     
+    this.state = {
+      usersList: null
     }
   }
   
   componentDidMount() {
-    this.updateCard();
+    this._getServerData();
   }
   
-  updateCard = async () => {
-    const id = 0;
-    
-    const res = await this.apiService.getResource();
-    console.log(res);
-    
-    const { geo } = res[id].address;
-    
-    this.setState({
-      // data: {
-      //   geolocation: geo,
-      // }
-      
-      data: res
-    });
+  _getServerData = () => {
+    this.props.getData()
+      .then((usersList) => {
+        this.setState({
+          usersList
+        });
+      });
   };
+  
+  renderItems(arr) {
+    const { onUserSelected } = this.props;
+    
+    return arr.map(({ id, email, name, username }) => {
+      return (
+        <li
+          key={id}
+          className="list-group-item d-flex justify-content-between lh-condensed"
+          onClick={ onUserSelected(id) }
+        >
+          <span className="text-muted">{ username }</span>
+          <div>
+            <h6 className="my-0 text-right">{ name }</h6>
+            <small className="text-middle">{ email }</small>
+          </div>
+        </li>
+      );
+    });
+  }
   
   
   render() {
     // const { notes } = this.props;
-    // const { title } = this.state;
+    const { usersList } = this.state;
+    
+    if (!usersList) {
+      return "Loading...";
+      // return <Spinner />;
+    }
+    
+    const listItems = this.renderItems(usersList);
     
     return(
       <div className="col-md-6">
         <ul className="user-list list-group mb-3">
-          <li className="list-group-item d-flex justify-content-between lh-condensed">
-            <span className="text-muted">Bret</span>
-            <div>
-              <h6 className="my-0">Leanne Graham</h6>
-              <small className="text-middle">Sincere@april.biz</small>
-            </div>
-          </li>
-          <li className="list-group-item d-flex justify-content-between lh-condensed">
-            <span className="text-muted">Bret</span>
-            <div>
-              <h6 className="my-0">Leanne Graham</h6>
-              <small className="text-middle">Sincere@april.biz</small>
-            </div>
-          </li>
-          <li className="list-group-item d-flex justify-content-between lh-condensed">
-            <span className="text-muted">Bret</span>
-            <div>
-              <h6 className="my-0">Leanne Graham</h6>
-              <small className="text-middle">Sincere@april.biz</small>
-            </div>
-          </li>
-          <li className="list-group-item d-flex justify-content-between lh-condensed">
-            <span className="text-muted">Bret</span>
-            <div>
-              <h6 className="my-0">Leanne Graham</h6>
-              <small className="text-middle">Sincere@april.biz</small>
-            </div>
-          </li>
-          <li className="list-group-item d-flex justify-content-between lh-condensed">
-            <span className="text-muted">Bret</span>
-            <div>
-              <h6 className="my-0">Leanne Graham</h6>
-              <small className="text-middle">Sincere@april.biz</small>
-            </div>
-          </li>
+          { listItems }
         </ul>
       </div>
     );
   }
 }
-
-UserList.defaultProps = {
-  //notes: []
-};
 
 
 export default UserList;

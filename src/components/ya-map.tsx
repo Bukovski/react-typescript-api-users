@@ -3,7 +3,7 @@ import { YMaps, Map, Placemark } from "react-yandex-maps";
 
 
 interface IYaMapProps {
-  geolocation: {
+  geocode: {
     lng: number,
     lat: number
   }
@@ -15,16 +15,18 @@ interface IStyle {
 
 
 const style: IStyle = {
+  position: "relative",
+  left: "0",
+  top: "0",
   width: '100%',
   height: '100%'
 };
 
-const YaMap = ({ geolocation: { lng, lat } }: IYaMapProps): JSX.Element => {
+const YaMap = ({ geocode: { lng, lat } }: IYaMapProps): JSX.Element => {
   return (
     <YMaps>
       <Map
-        MapType={'yandex#hybrid'}
-        defaultState={{ zoom: 3, center: [ lng, lat ] }}
+        defaultState={{ zoom: 4, center: [ lng, lat ], type: 'yandex#hybrid' }}
         style={ style }>
         { <Placemark geometry={[ lng, lat ]} /> }
       </Map>

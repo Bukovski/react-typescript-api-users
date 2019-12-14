@@ -19,7 +19,8 @@
 }
 
 .map {
-  background: #dbdbdb;
+  padding: 0;
   height: 300px;
   width: 100%;
+  background: #dbdbdb;
 }
