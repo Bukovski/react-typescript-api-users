@@ -1,18 +1,9 @@
 import React from "react";
 import YaMap from "./ya-map";
+import { ITransformUser } from "../interfaces"
 
 
-interface IInfoCardProps {
-  street: string,
-  suite: string,
-  city: string,
-  geocode: {
-    lat: number,
-    lng: number
-  }
-}
-
-const InfoCard = ({ street, suite, city, geocode }: IInfoCardProps): JSX.Element => (
+const InfoCard = ({ street, suite, city, geocode }: ITransformUser): JSX.Element => (
   <React.Fragment>
     <h2 className="my-3 text-center">Address</h2>
     <div className="row">

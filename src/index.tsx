@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css'; //from node_modules
 import "./styles/index.css"
-import App from './containers/App';
+import Users from './containers/users';
 
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Users />, document.getElementById('root'));
 
 

@@ -4,8 +4,14 @@ import UserList from "../components/user-list"
 import UserInfo from "../components/user-info"
 
 
-class App extends Component {
-  constructor(props) {
+interface IUserState {
+  selectedUser: null | number
+}
+
+class Users extends Component<object, IUserState> {
+  apiService: ApiUsers;
+  
+  constructor(props: object) {
     super(props);
     
     this.state = {
@@ -15,7 +21,7 @@ class App extends Component {
     this.apiService = new ApiUsers();
   }
   
-  handleUserSelected = (id) => () => {
+  handleUserSelected = (id: number) => () => {
     this.setState({
       selectedUser: id
     });
@@ -47,4 +53,4 @@ class App extends Component {
 }
 
 
-export default App;
+export default Users;
