@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import InfoCard from "./info-card";
+import { DotsRoller } from "../loader";
 
 
 class UserInfo extends Component {
@@ -56,7 +57,7 @@ class UserInfo extends Component {
     // const { notes } = this.props;
     const { cardInfo, loading } = this.state;
   
-    const spinner = loading ? "Loading..." : null;
+    const spinner = loading ? <DotsRoller /> : null;
     const content = !loading ? <InfoCard { ...cardInfo }/> : null;
   
     return(

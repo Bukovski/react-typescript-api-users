@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { DotsRoller } from "../loader";
 
 
 class UserList extends Component {
@@ -48,17 +49,16 @@ class UserList extends Component {
     // const { notes } = this.props;
     const { usersList } = this.state;
     
-    if (!usersList) {
-      return "Loading...";
-      // return <Spinner />;
-    }
+    let content = <DotsRoller />;
     
-    const listItems = this.renderItems(usersList);
+    if (usersList) {
+      content = this.renderItems(usersList);
+    }
     
     return(
       <div className="col-md-6">
         <ul className="user-list list-group mb-3">
-          { listItems }
+          { content }
         </ul>
       </div>
     );
