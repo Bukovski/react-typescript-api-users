@@ -1,6 +1,6 @@
 import React from "react";
-import YaMap from "./ya-map";
-import { ITransformUser } from "../interfaces"
+import { YaMap } from "../map";
+import { ITransformUser } from "../../interfaces"
 
 
 const InfoCard = ({ street, suite, city, geocode }: ITransformUser): JSX.Element => (

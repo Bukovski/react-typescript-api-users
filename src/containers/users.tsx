@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ApiUsers from "../services/api-users";
-import UserList from "../components/user-list"
-import UserInfo from "../components/user-info"
+import { UserList } from "../components/user-list"
+import { UserInfo } from "../components/user-info"
 
 
 interface IUserState {
