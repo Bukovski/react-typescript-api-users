@@ -2,8 +2,8 @@ import { ITransformAllUsers, IApiData, ITransformUser } from "../interfaces"
 
 
 export default class ApiUsers {
-  // _apiBase: string = "http://jsonplaceholder.typicode.com/";
-  private _apiBase: string = "./fakeData.json";
+  private _apiBase: string = "http://jsonplaceholder.typicode.com/";
+  // private _apiBase: string = "./fakeData.json";
 
   /**
    * Server data query designer
@@ -11,7 +11,7 @@ export default class ApiUsers {
    * @param url
    * @return Promise
    */
-  getResource = async (url: string = ""): Promise<IApiData[]> => {
+  getResource = async (url: string = ""): Promise<any> => {
     const response = await fetch(`${this._apiBase}${url}`);
 
     if (!response.ok) {
@@ -28,8 +28,8 @@ export default class ApiUsers {
    * @return Promise[]
    */
   getAllUsers = async (): Promise<ITransformAllUsers[]> => {
-    // const response = await this.getResource("users");
-    const response = await this.getResource();
+    const response = await this.getResource("users");
+    // const response = await this.getResource();
 
     return response.map(this._transformAllUsers);
   };
@@ -41,11 +41,11 @@ export default class ApiUsers {
    * @return Promise
    */
   getUser = async (id: number): Promise<ITransformUser> => {
-    // const response = await this.getResource(`users/${id}`);
-    // return this._transformUser(response);
+    const response = await this.getResource(`users/${id}`);
+    return this._transformUser(response);
 
-    const response = await this.getResource();
-    return this._transformUser(response[id]);
+    // const response = await this.getResource();
+    // return this._transformUser(response[id]);
   };
 
 
