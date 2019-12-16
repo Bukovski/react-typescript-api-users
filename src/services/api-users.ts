@@ -3,7 +3,6 @@ import { ITransformAllUsers, IApiData, ITransformUser } from "../interfaces"
 
 export default class ApiUsers {
   private _apiBase: string = "http://jsonplaceholder.typicode.com/";
-  // private _apiBase: string = "./fakeData.json";
 
   /**
    * Server data query designer
@@ -29,7 +28,6 @@ export default class ApiUsers {
    */
   getAllUsers = async (): Promise<ITransformAllUsers[]> => {
     const response = await this.getResource("users");
-    // const response = await this.getResource();
 
     return response.map(this._transformAllUsers);
   };
@@ -42,10 +40,8 @@ export default class ApiUsers {
    */
   getUser = async (id: number): Promise<ITransformUser> => {
     const response = await this.getResource(`users/${id}`);
-    return this._transformUser(response);
 
-    // const response = await this.getResource();
-    // return this._transformUser(response[id]);
+    return this._transformUser(response);
   };
 
 
