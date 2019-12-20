@@ -15,11 +15,12 @@ interface IwithLoadIndicatorProps {
   hasData: boolean
 }
 
+type UntitledProps = keyof IwithLoadIndicatorProps;
 
 const withLoadIndicator = <P extends IwithLoadIndicatorProps>(
   WrappedComponent: React.ComponentType<P>
 ) => class extends React.Component<
-  Omit<P, "onLoaded"|"onLoadStart"|"onError"|"hasData">,
+  Omit<P, UntitledProps>,
   IwithLoadIndicatorState
   > {
     state: IwithLoadIndicatorState = {
