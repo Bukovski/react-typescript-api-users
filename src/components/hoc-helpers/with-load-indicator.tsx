@@ -1,7 +1,6 @@
 import React from "react";
 import { DotsRoller } from "../loader";
 import { ErrorMessage } from "../error";
-import { ITransformAllUsers, ITransformUser } from "../../interfaces";
 
 
 interface IwithLoadIndicatorState {

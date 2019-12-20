@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import InfoCard from "./info-card";
-import { DotsRoller } from "../loader";
-import { ErrorButton, ErrorMessage } from "../error";
+import { ErrorButton } from "../error";
 import { ITransformUser } from "../../interfaces";
 import { withLoadIndicator } from "../hoc-helpers";
 

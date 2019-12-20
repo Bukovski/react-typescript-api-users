@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { DotsRoller } from "../loader";
-import { ErrorMessage } from "../error";
 import { ITransformAllUsers } from "../../interfaces";
 import { withLoadIndicator } from "../hoc-helpers";
 

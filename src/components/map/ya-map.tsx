@@ -1,5 +1,6 @@
 import React from "react";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
+import { DotsRoller } from "../loader";
 
 
 interface IYaMapProps {
@@ -22,7 +23,11 @@ const style: IStyle = {
   height: '100%'
 };
 
-const YaMap = ({ geocode: { lng, lat } }: IYaMapProps): JSX.Element => {
+const YaMap = ({ geocode }: IYaMapProps): JSX.Element => {
+  if (!geocode) return <DotsRoller />;
+
+  const { lng, lat } = geocode;
+
   return (
     <YMaps>
       <Map
