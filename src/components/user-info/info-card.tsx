@@ -20,7 +20,7 @@ const InfoCard = ({ street, suite, city, geocode }: ITransformUser): JSX.Element
       </div>
       
       <div className="map col-md-7">
-        <YaMap geocode={ geocode } />
+        {/*<YaMap geocode={ geocode } />*/}
       </div>
     </div>
   </React.Fragment>

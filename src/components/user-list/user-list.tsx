@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import { DotsRoller } from "../loader";
 import { ErrorMessage } from "../error";
-import { ITransformAllUsers, ITransformUser } from "../../interfaces";
+import { ITransformAllUsers } from "../../interfaces";
+import { withLoadIndicator } from "../hoc-helpers";
 
 
 interface IUserListState {
-  usersList: ITransformAllUsers[],
-  loading: boolean,
-  error: boolean
+  usersList: ITransformAllUsers[]
 }
 
 interface IUserListProps {
   onUserSelected: (id: number) => () => void,
-  getData: () => Promise<ITransformAllUsers[]>
+  getData: () => Promise<ITransformAllUsers[]>,
+  onLoaded: () => void,
+  onLoadStart: () => void,
+  onError: () => void,
+  hasData: boolean
 }
 
 class UserList extends Component<IUserListProps, IUserListState> {
@@ -20,9 +23,7 @@ class UserList extends Component<IUserListProps, IUserListState> {
     super(props);
     
     this.state = {
-      usersList: [],
-      loading: true, // load indicator
-      error: false, // show error
+      usersList: []
     }
   }
   
@@ -31,26 +32,21 @@ class UserList extends Component<IUserListProps, IUserListState> {
   }
   
   _userLoaded = (usersList: ITransformAllUsers[]): void => {
+    this.props.onLoaded();
+
     this.setState({
-      usersList,
-      loading: false,
-      error: false
+      usersList
     });
   };
-  
-  _onError = (): void => {
-    this.setState({
-      error: true,
-      loading: false
-    });
-  };
-  
+
   _getServerData = (): void => {
-    const { getData } = this.props;
-    
+    const { getData, onLoadStart, onError } = this.props;
+
+    onLoadStart();
+
     getData()
       .then(this._userLoaded)
-      .catch(this._onError)
+      .catch(onError)
   };
   
   renderItems(arr: ITransformAllUsers[]): JSX.Element[] {
@@ -75,20 +71,16 @@ class UserList extends Component<IUserListProps, IUserListState> {
   
   
   render() {
-    const { usersList, loading, error } = this.state;
-  
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const spinner = loading ? <DotsRoller /> : null;
-  
-    const hasData = !(loading || error);
+    const { usersList } = this.state;
+    const { hasData, children } = this.props;
+
     const content = hasData
       ? <ul className="user-list list-group mb-3">{ this.renderItems(usersList) }</ul>
       : null;
   
     return(
       <React.Fragment>
-        { errorMessage }
-        { spinner }
+        { children }
         { content }
       </React.Fragment>
     );
@@ -96,4 +88,4 @@ class UserList extends Component<IUserListProps, IUserListState> {
 }
 
 
-export default UserList;
+export default withLoadIndicator(UserList);

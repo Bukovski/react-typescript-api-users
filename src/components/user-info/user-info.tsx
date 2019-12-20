@@ -3,17 +3,20 @@ import InfoCard from "./info-card";
 import { DotsRoller } from "../loader";
 import { ErrorButton, ErrorMessage } from "../error";
 import { ITransformUser } from "../../interfaces";
+import { withLoadIndicator } from "../hoc-helpers";
 
 
 interface IUserInfoStateState {
-  cardInfo: object | ITransformUser,
-  loading: boolean,
-  error: boolean
+  cardInfo: object | ITransformUser
 }
 
 interface IUserInfoStateProps {
   userId: null | number,
-  getData: (id: number) => Promise<ITransformUser>
+  getData: (id: number) => Promise<ITransformUser>,
+  onLoaded: () => void,
+  onLoadStart: () => void,
+  onError: () => void,
+  hasData: boolean
 }
 
 
@@ -22,9 +25,7 @@ class UserInfo extends Component<IUserInfoStateProps, IUserInfoStateState> {
     super(props);
 
     this.state = {
-      cardInfo: {},
-      loading: true, // load indicator
-      error: false, // show error
+      cardInfo: {}
     }
   }
   
@@ -39,48 +40,34 @@ class UserInfo extends Component<IUserInfoStateProps, IUserInfoStateState> {
   }
   
   _cardLoaded = (cardInfo: ITransformUser): void => {
+    this.props.onLoaded();
+
     this.setState({
-      cardInfo,
-      loading: false,
-      error: false
+      cardInfo
     });
   };
-  
-  _onError = (): void => {
-    this.setState({
-      error: true,
-      loading: false
-    });
-  };
-  
+
   _updateInfo = (): void => {
-    this.setState({
-      loading: true
-    });
-    
-    // const id: number = -44; // create error for test error message
-    const id: number = this.props.userId || Math.floor(Math.random() * 5) + 1;
-    
-    const { getData } = this.props;
-    
+    const { userId, getData, onLoadStart, onError } = this.props;
+
+    const id: number = userId || Math.floor(Math.random() * 5) + 1;
+
+    onLoadStart();
+
     getData(id)
       .then(this._cardLoaded)
-      .catch(this._onError)
+      .catch(onError)
   };
 
   render() {
-    const { cardInfo, loading, error } = this.state;
-  
-    const errorMessage = error ? <ErrorMessage /> : null;
-    const spinner = loading ? <DotsRoller /> : null;
-  
-    const hasData = !(loading || error);
+    const { cardInfo } = this.state;
+    const { hasData, children } = this.props;
+
     const content = hasData ? <InfoCard { ...cardInfo as ITransformUser }/> : null;
   
     return(
       <React.Fragment>
-        { errorMessage }
-        { spinner }
+        { children }
         { content }
   
         <ErrorButton >
@@ -92,4 +79,4 @@ class UserInfo extends Component<IUserInfoStateProps, IUserInfoStateState> {
 }
 
 
-export default UserInfo;
+export default withLoadIndicator(UserInfo);
